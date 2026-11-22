@@ -1,171 +1,172 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MOVIQ AI</title>
+<title>MOVIQ Studio — AI Video</title>
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  background: #08090d;
-  color: white;
-  font-family: Arial, sans-serif;
-  min-height: 100vh;
-}
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 22px;
-  border-bottom: 1px solid #20212a;
-}
-.logo { font-size: 25px; font-weight: 800; letter-spacing: 2px; }
-.logo span { color: #8b5cf6; }
-.badge {
-  color: #c4b5fd;
-  background: #21183a;
-  padding: 8px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-}
-main { max-width: 850px; margin: 65px auto; padding: 20px; }
-.hero { text-align: center; margin-bottom: 40px; }
-.hero h1 {
-  font-size: clamp(35px, 8vw, 60px);
-  margin-bottom: 18px;
-  line-height: 1.1;
-}
-.hero h1 span { color: #a78bfa; }
-.hero p { color: #9999a8; line-height: 1.6; }
-.panel {
-  background: #111219;
-  border: 1px solid #292a35;
-  border-radius: 18px;
-  padding: 22px;
-}
-.tabs { display: flex; gap: 10px; margin-bottom: 20px; }
-.tab {
-  background: #1b1c26;
-  color: #aaaab9;
-  border: 1px solid #30313d;
-  padding: 12px;
-  border-radius: 10px;
-  flex: 1;
-  cursor: pointer;
-}
-.tab.active {
-  color: white;
-  border-color: #8b5cf6;
-  background: #29213f;
-}
-textarea {
-  width: 100%;
-  height: 130px;
-  background: #090a10;
-  border: 1px solid #292a35;
-  border-radius: 12px;
-  padding: 16px;
-  color: white;
-  font-size: 16px;
-  resize: vertical;
-  outline: none;
-}
-textarea:focus { border-color: #8b5cf6; }
-.label { color: #a5a5b5; font-size: 13px; margin: 20px 0 10px; }
-.options { display: flex; gap: 10px; flex-wrap: wrap; }
-.option {
-  padding: 10px 15px;
-  border: 1px solid #30313d;
-  background: #1a1b24;
-  color: white;
-  border-radius: 10px;
-  cursor: pointer;
-}
-.option.active { border-color: #8b5cf6; background: #29213f; }
-.generate {
-  width: 100%;
-  margin-top: 25px;
-  padding: 16px;
-  border: none;
-  border-radius: 12px;
-  background: linear-gradient(90deg,#7c3aed,#6366f1);
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-}
-.generate:active { transform: scale(.98); }
-#message {
-  display: none;
-  color: #c4b5fd;
-  text-align: center;
-  margin-top: 18px;
-  line-height: 1.5;
-}
-footer { text-align: center; padding: 30px; color: #666675; font-size: 13px; }
+*{box-sizing:border-box}
+body{margin:0;background:#080b14;color:#f5f6ff;font-family:Arial,sans-serif}
+header{padding:22px 7%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #202538}
+.logo{font-size:25px;font-weight:900;letter-spacing:2px;color:#8b7cff}
+.logo span{color:white}
+.tag{font-size:11px;color:#9ba3bb;letter-spacing:2px}
+main{max-width:850px;margin:45px auto;padding:0 18px}
+h1{font-size:34px;margin:0 0 10px}
+.sub{color:#9ba3bb;margin-bottom:30px;line-height:1.5}
+.panel{background:#111625;border:1px solid #252d43;border-radius:18px;padding:22px;margin-bottom:18px}
+h2{font-size:17px;margin:0 0 16px}
+label{display:block;color:#c4c9da;font-size:13px;margin:15px 0 8px}
+textarea,select{width:100%;background:#090e1b;color:white;border:1px solid #303951;border-radius:10px;padding:13px;font-size:15px;outline:none}
+textarea{height:115px;resize:vertical}
+select{margin-bottom:5px}
+.modes{display:flex;gap:9px;flex-wrap:wrap}
+.choice{background:#0b1020;color:#cbd0e1;border:1px solid #303951;border-radius:10px;padding:11px 15px;cursor:pointer}
+.choice.active{background:#5141b8;border-color:#8b7cff;color:white}
+.upload{border:1px dashed #59627e;border-radius:13px;padding:25px;text-align:center;color:#aab2ca;cursor:pointer}
+.upload input{display:none}
+#imagePreview{max-width:100%;max-height:230px;margin-top:14px;border-radius:12px;display:none}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.primary{width:100%;padding:16px;border:0;border-radius:12px;background:linear-gradient(100deg,#6652ed,#9a56e8);color:white;font-size:16px;font-weight:bold;margin-top:20px;cursor:pointer}
+.primary:disabled{opacity:.6}
+.note{font-size:12px;color:#9ba3bb;line-height:1.5;margin-top:12px}
+.result{display:none}
+.preview{min-height:190px;border-radius:13px;background:linear-gradient(135deg,#24205a,#111b35,#542e69);display:flex;align-items:center;justify-content:center;text-align:center;padding:25px}
+.preview img{max-width:100%;max-height:260px;border-radius:10px}
+.demo{color:#ddd;font-size:14px;line-height:1.6}
+.status{color:#a99bff;font-size:13px;margin-top:14px}
+.history-item{padding:12px 0;border-bottom:1px solid #293147;color:#cbd0e1;font-size:13px}
+footer{text-align:center;color:#68718b;padding:35px 10px;font-size:12px}
+@media(max-width:550px){h1{font-size:27px}.panel{padding:17px}.grid{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
 <header>
-  <div class="logo">MOVI<span>Q</span></div>
-  <div class="badge">AI VIDEO STUDIO</div>
+ <div class="logo">MOVIQ<span> STUDIO</span></div>
+ <div class="tag">AI VIDEO CREATOR</div>
 </header>
 <main>
-  <section class="hero">
-    <h1>Turn your imagination<br>into <span>video.</span></h1>
-    <p>Create cinematic videos from text and images.<br>
-    Your imagination is the only limit.</p>
-  </section>
-  <section class="panel">
-    <div class="tabs">
-      <button class="tab active" onclick="setMode('text',this)">Text to Video</button>
-      <button class="tab" onclick="setMode('image',this)">Image to Video</button>
-    </div>
-    <textarea id="prompt" placeholder="Describe the video you want to create..."></textarea>
-    <div class="label">Aspect ratio</div>
-    <div class="options" id="ratios">
-      <button class="option active" onclick="selectOption(this)">9:16</button>
-      <button class="option" onclick="selectOption(this)">16:9</button>
-      <button class="option" onclick="selectOption(this)">1:1</button>
-    </div>
-    <div class="label">Video duration</div>
-    <div class="options" id="durations">
-      <button class="option active" onclick="selectOption(this)">5 sec</button>
-      <button class="option" onclick="selectOption(this)">10 sec</button>
-    </div>
-    <button class="generate" onclick="generate()">Generate Video ✦</button>
-    <div id="message"></div>
-  </section>
+ <h1>Создай своё видео</h1>
+ <p class="sub">Превращай идеи и изображения в видео. Твоя творческая студия начинается здесь.</p>
+ <section class="panel">
+  <h2>1. Выбери режим</h2>
+  <div class="modes">
+   <button class="choice active" id="textMode" onclick="setMode('text')">Текст → Видео</button>
+   <button class="choice" id="imageMode" onclick="setMode('image')">Фото → Видео</button>
+  </div>
+  <label for="prompt">Опиши своё будущее видео</label>
+  <textarea id="prompt" placeholder="Например: красивый ночной город, неоновые огни, дождь, кинематографичный стиль..."></textarea>
+  <div id="uploadArea" style="display:none">
+   <label>Загрузи изображение</label>
+   <label class="upload" for="imageFile">
+    <strong>＋ Выбрать изображение</strong>
+    <div class="note">Нажми, чтобы загрузить фото с телефона</div>
+    <input type="file" id="imageFile" accept="image/*">
+    <img id="imagePreview" alt="Предпросмотр изображения">
+   </label>
+  </div>
+ </section>
+ <section class="panel">
+  <h2>2. Настройки видео</h2>
+  <div class="grid">
+   <div><label>Формат</label>
+    <select id="ratio"><option>9:16</option><option>16:9</option><option>1:1</option></select>
+   </div>
+   <div><label>Длительность</label>
+    <select id="duration"><option value="5">5 секунд</option><option value="10">10 секунд</option><option value="15">15 секунд</option></select>
+   </div>
+   <div><label>Качество</label>
+    <select id="quality"><option>Стандартное</option><option>Высокое</option><option>Максимальное</option></select>
+   </div>
+  </div>
+  <button class="primary" id="generate" onclick="generateDemo()">✦ Создать видео</button>
+  <p class="note">Демонстрационный режим. Настоящая генерация видео будет подключена отдельно.</p>
+  <div class="status" id="status"></div>
+ </section>
+ <section class="panel result" id="result">
+  <h2>3. Результат</h2>
+  <div class="preview" id="preview"><div class="demo">MOVIQ STUDIO</div></div>
+  <p class="note" id="resultInfo"></p>
+  <p class="note">Это демонстрационный результат, а не настоящий видеофайл.</p>
+  <button class="choice" onclick="resetDemo()">Создать ещё раз</button>
+  <button class="choice" id="downloadImage" style="display:none" onclick="downloadUploaded()">Скачать загруженное фото</button>
+ </section>
+ <section class="panel">
+  <h2>История проектов</h2>
+  <div id="history"><p class="note">Пока проектов нет.</p></div>
+ </section>
 </main>
-<footer>MOVIQ AI · Imagine. Create. Move.</footer>
+<footer>MOVIQ STUDIO © 2026 · CREATE YOUR WORLD</footer>
 <script>
-let mode = "text";
-function setMode(newMode, button) {
-  mode = newMode;
-  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-  button.classList.add("active");
-  document.getElementById("prompt").placeholder =
-    mode === "text"
-    ? "Describe the video you want to create..."
-    : "Describe how your image should move...";
+let mode='text',uploadedImage='';
+function setMode(value){
+ mode=value;
+ document.getElementById('textMode').classList.toggle('active',value==='text');
+ document.getElementById('imageMode').classList.toggle('active',value==='image');
+ document.getElementById('uploadArea').style.display=value==='image'?'block':'none';
 }
-function selectOption(button) {
-  const parent = button.parentElement;
-  parent.querySelectorAll(".option").forEach(b => b.classList.remove("active"));
-  button.classList.add("active");
+document.getElementById('imageFile').addEventListener('change',function(){
+ const file=this.files[0];
+ if(!file)return;
+ if(!file.type.startsWith('image/')){alert('Выбери изображение.');return;}
+ const reader=new FileReader();
+ reader.onload=function(e){
+ uploadedImage=e.target.result;
+ const img=document.getElementById('imagePreview');
+ img.src=uploadedImage;img.style.display='block';
+ };
+ reader.readAsDataURL(file);
+});
+function generateDemo(){
+ const prompt=document.getElementById('prompt').value.trim();
+ if(!prompt){alert('Сначала напиши описание видео.');return;}
+ if(mode==='image'&&!uploadedImage){alert('Сначала загрузи изображение.');return;}
+ const btn=document.getElementById('generate');
+ const status=document.getElementById('status');
+ btn.disabled=true;status.textContent='Подготавливаем демонстрацию...';
+ setTimeout(function(){
+ const preview=document.getElementById('preview');preview.innerHTML='';
+ if(mode==='image'){
+ const img=document.createElement('img');img.src=uploadedImage;img.alt='Загруженное изображение';preview.appendChild(img);
+ }else{
+ const div=document.createElement('div');div.className='demo';div.textContent='✦ MOVIQ STUDIO — DEMO ✦';preview.appendChild(div);
+ }
+ document.getElementById('resultInfo').textContent='Описание: '+prompt+' · Формат: '+document.getElementById('ratio').value+' · Длительность: '+document.getElementById('duration').value+' сек.';
+ document.getElementById('downloadImage').style.display=mode==='image'?'inline-block':'none';
+ document.getElementById('result').style.display='block';
+ status.textContent='Демонстрация готова!';
+ btn.disabled=false;saveHistory(prompt);
+ document.getElementById('result').scrollIntoView({behavior:'smooth'});
+ },1200);
 }
-function generate() {
-  const prompt = document.getElementById("prompt").value.trim();
-  const message = document.getElementById("message");
-  message.style.display = "block";
-  if (!prompt) {
-    message.textContent = "Please describe your video first.";
-    return;
-  }
-  message.textContent =
-    "MOVIQ is your first prototype! The interface works, but a video generation model has not been connected yet.";
+function downloadUploaded(){
+ if(!uploadedImage)return;
+ const a=document.createElement('a');a.href=uploadedImage;a.download='moviq-image.png';a.click();
 }
+function resetDemo(){
+ document.getElementById('result').style.display='none';
+ document.getElementById('status').textContent='';
+ document.getElementById('prompt').focus();
+}
+function saveHistory(prompt){
+ let items=[];
+ try{items=JSON.parse(localStorage.getItem('moviqHistory')||'[]')}catch(e){}
+ items.unshift({prompt:prompt,date:new Date().toLocaleString('ru-RU')});
+ items=items.slice(0,10);
+ try{localStorage.setItem('moviqHistory',JSON.stringify(items))}catch(e){}
+ renderHistory(items);
+}
+function renderHistory(items){
+ const area=document.getElementById('history');area.innerHTML='';
+ if(!items.length){area.innerHTML='<p class="note">Пока проектов нет.</p>';return;}
+ items.forEach(item=>{
+ const div=document.createElement('div');div.className='history-item';
+ div.textContent='✦ '+item.prompt+' — '+item.date;area.appendChild(div);
+ });
+}
+try{renderHistory(JSON.parse(localStorage.getItem('moviqHistory')||'[]'))}catch(e){renderHistory([])}
+setMode('text');
 </script>
 </body>
 </html>
