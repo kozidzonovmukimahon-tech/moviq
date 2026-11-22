@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MOVIQ AI</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #08090d;
+  color: white;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+}
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px;
+  border-bottom: 1px solid #20212a;
+}
+.logo { font-size: 25px; font-weight: 800; letter-spacing: 2px; }
+.logo span { color: #8b5cf6; }
+.badge {
+  color: #c4b5fd;
+  background: #21183a;
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+main { max-width: 850px; margin: 65px auto; padding: 20px; }
+.hero { text-align: center; margin-bottom: 40px; }
+.hero h1 {
+  font-size: clamp(35px, 8vw, 60px);
+  margin-bottom: 18px;
+  line-height: 1.1;
+}
+.hero h1 span { color: #a78bfa; }
+.hero p { color: #9999a8; line-height: 1.6; }
+.panel {
+  background: #111219;
+  border: 1px solid #292a35;
+  border-radius: 18px;
+  padding: 22px;
+}
+.tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+.tab {
+  background: #1b1c26;
+  color: #aaaab9;
+  border: 1px solid #30313d;
+  padding: 12px;
+  border-radius: 10px;
+  flex: 1;
+  cursor: pointer;
+}
+.tab.active {
+  color: white;
+  border-color: #8b5cf6;
+  background: #29213f;
+}
+textarea {
+  width: 100%;
+  height: 130px;
+  background: #090a10;
+  border: 1px solid #292a35;
+  border-radius: 12px;
+  padding: 16px;
+  color: white;
+  font-size: 16px;
+  resize: vertical;
+  outline: none;
+}
+textarea:focus { border-color: #8b5cf6; }
+.label { color: #a5a5b5; font-size: 13px; margin: 20px 0 10px; }
+.options { display: flex; gap: 10px; flex-wrap: wrap; }
+.option {
+  padding: 10px 15px;
+  border: 1px solid #30313d;
+  background: #1a1b24;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.option.active { border-color: #8b5cf6; background: #29213f; }
+.generate {
+  width: 100%;
+  margin-top: 25px;
+  padding: 16px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(90deg,#7c3aed,#6366f1);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.generate:active { transform: scale(.98); }
+#message {
+  display: none;
+  color: #c4b5fd;
+  text-align: center;
+  margin-top: 18px;
+  line-height: 1.5;
+}
+footer { text-align: center; padding: 30px; color: #666675; font-size: 13px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">MOVI<span>Q</span></div>
+  <div class="badge">AI VIDEO STUDIO</div>
+</header>
+<main>
+  <section class="hero">
+    <h1>Turn your imagination<br>into <span>video.</span></h1>
+    <p>Create cinematic videos from text and images.<br>
+    Your imagination is the only limit.</p>
+  </section>
+  <section class="panel">
+    <div class="tabs">
+      <button class="tab active" onclick="setMode('text',this)">Text to Video</button>
+      <button class="tab" onclick="setMode('image',this)">Image to Video</button>
+    </div>
+    <textarea id="prompt" placeholder="Describe the video you want to create..."></textarea>
+    <div class="label">Aspect ratio</div>
+    <div class="options" id="ratios">
+      <button class="option active" onclick="selectOption(this)">9:16</button>
+      <button class="option" onclick="selectOption(this)">16:9</button>
+      <button class="option" onclick="selectOption(this)">1:1</button>
+    </div>
+    <div class="label">Video duration</div>
+    <div class="options" id="durations">
+      <button class="option active" onclick="selectOption(this)">5 sec</button>
+      <button class="option" onclick="selectOption(this)">10 sec</button>
+    </div>
+    <button class="generate" onclick="generate()">Generate Video ✦</button>
+    <div id="message"></div>
+  </section>
+</main>
+<footer>MOVIQ AI · Imagine. Create. Move.</footer>
+<script>
+let mode = "text";
+function setMode(newMode, button) {
+  mode = newMode;
+  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+  button.classList.add("active");
+  document.getElementById("prompt").placeholder =
+    mode === "text"
+    ? "Describe the video you want to create..."
+    : "Describe how your image should move...";
+}
+function selectOption(button) {
+  const parent = button.parentElement;
+  parent.querySelectorAll(".option").forEach(b => b.classList.remove("active"));
+  button.classList.add("active");
+}
+function generate() {
+  const prompt = document.getElementById("prompt").value.trim();
+  const message = document.getElementById("message");
+  message.style.display = "block";
+  if (!prompt) {
+    message.textContent = "Please describe your video first.";
+    return;
+  }
+  message.textContent =
+    "MOVIQ is your first prototype! The interface works, but a video generation model has not been connected yet.";
+}
+</script>
+</body>
+</html>
