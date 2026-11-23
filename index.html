@@ -118,27 +118,54 @@ document.getElementById('imageFile').addEventListener('change',function(){
  };
  reader.readAsDataURL(file);
 });
-function generateDemo(){
+async function generateDemo(){
  const prompt=document.getElementById('prompt').value.trim();
  if(!prompt){alert('Сначала напиши описание видео.');return;}
  if(mode==='image'&&!uploadedImage){alert('Сначала загрузи изображение.');return;}
+
  const btn=document.getElementById('generate');
  const status=document.getElementById('status');
- btn.disabled=true;status.textContent='Подготавливаем демонстрацию...';
- setTimeout(function(){
- const preview=document.getElementById('preview');preview.innerHTML='';
- if(mode==='image'){
- const img=document.createElement('img');img.src=uploadedImage;img.alt='Загруженное изображение';preview.appendChild(img);
- }else{
- const div=document.createElement('div');div.className='demo';div.textContent='✦ MOVIQ STUDIO — DEMO ✦';preview.appendChild(div);
+ btn.disabled=true;
+ status.textContent='Проверяем соединение MOVIQ...';
+
+ try{
+  const response=await fetch('https://moviq.muhiddin20112012.workers.dev/health');
+  const api=await response.json();
+
+  if(!api.ok)throw new Error('API недоступен');
+
+  status.textContent='MOVIQ API подключён! Подготавливаем демонстрацию...';
+
+  const preview=document.getElementById('preview');
+  preview.innerHTML='';
+
+  if(mode==='image'){
+   const img=document.createElement('img');
+   img.src=uploadedImage;
+   img.alt='Загруженное изображение';
+   preview.appendChild(img);
+  }else{
+   const div=document.createElement('div');
+   div.className='demo';
+   div.textContent='✦ MOVIQ STUDIO — DEMO ✦';
+   preview.appendChild(div);
+  }
+
+  document.getElementById('resultInfo').textContent=
+   'Описание: '+prompt+' · Формат: '+document.getElementById('ratio').value+' · Длительность: '+document.getElementById('duration').value+' сек.';
+
+  document.getElementById('downloadImage').style.display=mode==='image'?'inline-block':'none';
+  document.getElementById('result').style.display='block';
+  status.textContent='Сервер MOVIQ подключён! Демонстрация готова.';
+  saveHistory(prompt);
+  document.getElementById('result').scrollIntoView({behavior:'smooth'});
+
+ }catch(error){
+  status.textContent='Не удалось подключиться к MOVIQ API.';
+  alert('Ошибка подключения к серверу MOVIQ.');
+ }finally{
+  btn.disabled=false;
  }
- document.getElementById('resultInfo').textContent='Описание: '+prompt+' · Формат: '+document.getElementById('ratio').value+' · Длительность: '+document.getElementById('duration').value+' сек.';
- document.getElementById('downloadImage').style.display=mode==='image'?'inline-block':'none';
- document.getElementById('result').style.display='block';
- status.textContent='Демонстрация готова!';
- btn.disabled=false;saveHistory(prompt);
- document.getElementById('result').scrollIntoView({behavior:'smooth'});
- },1200);
 }
 function downloadUploaded(){
  if(!uploadedImage)return;
