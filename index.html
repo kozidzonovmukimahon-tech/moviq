@@ -142,15 +142,52 @@ async function generateDemo(){
   });
 
   const api=await response.json();
+  if(!response.ok) throw new Error(api.error||api.message||'Ошибка сервера');
 
-  if(!response.ok){
-   throw new Error(api.error||api.message||'Ошибка сервера');
+  const taskId=api.data?.taskId;
+  if(!taskId) throw new Error('Сервер не вернул taskId');
+
+  status.textContent='MOVIQ: видео создаётся...';
+
+  for(let i=0;i<120;i++){
+   await new Promise(r=>setTimeout(r,5000));
+
+   const check=await fetch(
+    'https://moviq.muhiddin20112012.workers.dev/status?taskId='+encodeURIComponent(taskId)
+   );
+
+   const result=await check.json();
+   const state=result.data?.state;
+
+   if(state==='success'){
+    let parsed=result.data.resultJson;
+    if(typeof parsed==='string'){
+     parsed=JSON.parse(parsed);
+    }
+
+    const videoUrl=parsed?.resultUrls?.[0]||parsed?.videoUrl;
+
+    if(!videoUrl) throw new Error('Видео готово, но ссылка не найдена');
+
+    document.getElementById('preview').innerHTML=
+     '<video controls playsinline style="width:100%;border-radius:12px" src="'+videoUrl+'"></video>';
+
+    document.getElementById('resultInfo').textContent='Видео готово!';
+    document.getElementById('result').style.display='block';
+    status.textContent='MOVIQ: видео готово!';
+    break;
+   }
+
+   if(state==='fail'){
+    throw new Error('Генерация не удалась');
+   }
+
+   status.textContent='MOVIQ: видео создаётся... '+(i+1)*5+' сек.';
   }
 
-  status.textContent=api.message||'Запрос получен сервером MOVIQ.';
-  document.getElementById('preview').innerHTML='';
-  document.getElementById('resultInfo').textContent='Запрос отправлен.';
-  document.getElementById('result').style.display='block';
+  if(status.textContent!=='MOVIQ: видео готово!'){
+   throw new Error('Время ожидания истекло');
+  }
 
  }catch(error){
   status.textContent='Ответ сервера: '+error.message;
