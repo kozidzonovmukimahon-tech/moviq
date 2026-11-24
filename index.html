@@ -170,7 +170,7 @@ async function generateDemo(){
     if(!videoUrl) throw new Error('Видео готово, но ссылка не найдена');
 
     document.getElementById('preview').innerHTML=
-     '<video controls playsinline style="width:100%;border-radius:12px" src="'+videoUrl+'"></video>';
+     '<video id="moviqVideo" controls playsinline style="width:100%;border-radius:12px" src="'+videoUrl+'"></video><a href="'+videoUrl+'" download="MOVIQ-video.mp4" style="display:block;text-align:center;padding:12px;background:#222;color:white;border-radius:10px;margin-top:10px;text-decoration:none">⬇ Скачать видео</a>';
 
     document.getElementById('resultInfo').textContent='Видео готово!';
     document.getElementById('result').style.display='block';
